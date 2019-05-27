@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.0" 
+	xmlns="http://java.sun.com/xml/ns/javaee" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+	http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+  <display-name>admin-web</display-name>
+  
+   <welcome-file-list>
+   		<welcome-file>/jsp/login.jsp</welcome-file>
+  </welcome-file-list>
+  
+    <listener>  
+   	 <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>  
+    </listener>
+  
+  	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<!--查找这里可以配置多个,用逗号分割或者用通配符*也就是第二行 -->
+		<param-value>classpath:applicationContext.xml</param-value>
+	</context-param>
+	
+	<servlet>
+	    <servlet-name>spring-mvc</servlet-name>
+	    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+	    <init-param>
+	      <param-name>contextConfigLocation</param-name>
+	      <param-value>classpath:spring-servlet.xml</param-value>
+	    </init-param>
+	    <load-on-startup>1</load-on-startup>
+	    <multipart-config>
+			<max-file-size>52428800</max-file-size>
+			<max-request-size>52428800</max-request-size>
+			<file-size-threshold>0</file-size-threshold>
+		</multipart-config>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>spring-mvc</servlet-name>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
+  
+  <!-- 编码过滤器 -->
+	<filter>
+	   <filter-name>encodingFilter</filter-name>
+	   <filter-class>org.springframework.web.filter.CharacterEncodingFilter </filter-class>
+	   <init-param>
+	      <param-name>encoding</param-name>
+	      <param-value>utf8</param-value>
+	   </init-param>
+		
+	</filter>
+	<filter-mapping>
+	   <filter-name>encodingFilter</filter-name >
+	   <url-pattern>/*</url-pattern>
+	</filter-mapping>
+  
+</web-app>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://code.alibabatech.com/schema/dubbo
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+        
+	<dubbo:application name="admin-web" />
+	<!-- 全局超时配置 -->
+    <dubbo:consumer timeout="60000"/>
+	
+	<dubbo:registry address="zookeeper://127.0.0.1:2181" />
+        
+        
+   <!-- 生成远程服务代理，可以像使用本地bean一样使用demoService -->
+	<dubbo:reference id="publicService" interface="com.szrhtf.share.interfaces.PublicService"/>
+	<!-- <dubbo:reference id="bindcardService" interface="com.szrhtf.share.interfaces.BindCardService"/> -->
+	<dubbo:reference id="merchantService" interface="com.szrhtf.share.interfaces.MerchantService"/>
+	<dubbo:reference id="fundService" interface="com.szrhtf.share.interfaces.FundService"/>
+	<dubbo:reference id="accountManagerService" interface="com.szrhtf.share.interfaces.AccountManagerService" check="false"/>
+	<dubbo:reference id="transService" interface="com.szrhtf.share.interfaces.TransService" check="false"/>
+	<dubbo:reference id="transInfoService" interface="com.szrhtf.web.share.interfaces.TransInfoService"/>
+	<dubbo:reference id="memcachedService" interface="com.szrhtf.share.memcache.MemcachedService"/>
+	<dubbo:reference id="merchantInfoService" interface="com.szrhtf.web.share.interfaces.MerchantInfoService"/>
+	<dubbo:reference id="productInfoService" interface="com.szrhtf.web.share.interfaces.ProductInfoService"/>
+	<dubbo:reference id="orderInfoService" interface="com.szrhtf.share.interfaces.OrderInfoService"/>
+	<dubbo:reference id="subjectInfoService" interface="com.szrhtf.web.share.interfaces.SubjectInfoService"/>
+    <dubbo:reference id="transReportService" interface="com.szrhtf.share.interfaces.TransReportService"/>
+    <dubbo:reference id="merchantSecurityService" interface="com.szrhtf.share.interfaces.MerchantSecurityService"/>
+    <dubbo:reference id="cardbinInfoService" interface="com.szrhtf.web.share.interfaces.CardbinInfoService" />
+	
+	
+	<!-- 连接web-server -->
+	<dubbo:reference id="configService" interface="com.szrhtf.web.share.interfaces.ConfigService"/>
+	<dubbo:reference id="dictionaryService" interface="com.szrhtf.web.share.interfaces.DictionaryService"/>
+	<dubbo:reference id="roleService" interface="com.szrhtf.web.share.interfaces.RoleService"/>
+	<dubbo:reference id="menuService" interface="com.szrhtf.web.share.interfaces.MenuService"/>
+	<dubbo:reference id="userService" interface="com.szrhtf.web.share.interfaces.UserService"/>
+	<dubbo:reference id="channelService" interface="com.szrhtf.web.share.interfaces.ChannelService"/>
+	<dubbo:reference id="terminalService" interface="com.szrhtf.web.share.interfaces.TerminalService"/>
+	<dubbo:reference id="rateSchemaService" interface="com.szrhtf.web.share.interfaces.RateSchemaService"/>
+	<dubbo:reference id="publicInfoService" interface="com.szrhtf.web.share.interfaces.PublicInfoService"/>
+	<dubbo:reference id="routeInfoService" interface="com.szrhtf.web.share.interfaces.RouteInfoService"/>
+	<dubbo:reference id="settlementService" interface="com.szrhtf.web.share.interfaces.SettlementService"/>
+	<dubbo:reference id="manualAccountService" interface="com.szrhtf.share.interfaces.ManualAccountService" check="false"/>
+	<dubbo:reference id="agentService" interface="com.szrhtf.web.share.interfaces.AgentService" />
+	<dubbo:reference id="channelBankService" interface="com.szrhtf.web.share.interfaces.ChannelBankService" />
+	<dubbo:reference id="constraintService" interface="com.szrhtf.web.share.interfaces.ConstraintService" />
+    <dubbo:reference id="payInfoService" interface="com.szrhtf.web.share.interfaces.PayInfoService" />
+    <dubbo:reference id="proxyPayService" interface="com.szrhtf.share.interfaces.ProxyPayService"/>
+    <dubbo:reference id="cardInfoService" interface="com.szrhtf.web.share.interfaces.CardInfoService"/>
+    <dubbo:reference id="manualSettlementService" interface="com.szrhtf.share.interfaces.ManualSettlementService"/>
+	<dubbo:reference id="myCommonService" interface="com.szrhtf.web.share.interfaces.MyCommonService"/>
+	<dubbo:reference id="workManager" interface="com.szrhtf.web.share.interfaces.workflow.WorkManager"/>
+	<dubbo:reference id="workFlowService" interface="com.szrhtf.web.share.interfaces.workflow.WorkFlowService"/>	
+	<dubbo:reference id="dailySwitchTaskService" interface="com.szrhtf.web.share.interfaces.DailySwitchTaskService" check="false"/>
+	<dubbo:reference id="customerInfoService" interface="com.szrhtf.web.share.interfaces.CustomerInfoService" check="false"/>    
+        
+</beans>
