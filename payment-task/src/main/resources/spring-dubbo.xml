@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://code.alibabatech.com/schema/dubbo
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<!-- 消费方应用名，用于计算依赖关系，不是匹配条件，不要与提供方一样 -->
+	<dubbo:application name="paymentTask" />
+
+	<!-- 使用zookeeper注册中心暴露服务地址  
+	 <dubbo:registry address="multicast://224.5.6.7:1234" />
+	 <dubbo:registry address="zookeeper://192.168.1.47:2181" />
+	 <dubbo:registry address="zookeeper://192.168.1.48:2181" />
+	 <dubbo:consumer timeout="${dubbo.timeout}"  />
+	 -->
+	
+	
+	<dubbo:registry address="zookeeper://127.0.0.1:2181" />
+	
+<!-- 	<dubbo:registry address="zookeeper://172.16.3.211:2181" /> -->
+<!-- 	<dubbo:registry address="zookeeper://172.23.20.75:2181" /> 生产环境配置
+    <dubbo:registry address="zookeeper://172.23.20.76:2181" /> 生产环境配置 -->
+	<!--  
+    <dubbo:registry address="${dubbo.registry2}" />
+    -->
+	<!-- 用dubbo协议在20880端口暴露服务,序列化 -->
+	<!-- <dubbo:protocol name="dubbo" serialization="kryo" port="20880" optimizer="com.szrhtf.share.dubbox.SerializationOptimizerImpl"/>  -->
+	
+<!-- 	 <dubbo:protocol name="dubbo" port="20889" /> -->
+	 <dubbo:protocol name="dubbo" port="20883" />   <!-- 生产环境配置 -->
+	 
+	<!-- 生成远程服务代理，可以像使用本地bean一样使用demoService -->
+	<dubbo:reference id="taskInfoService" interface="com.szrhtf.web.share.interfaces.TaskInfoService" />
+	<bean id ="dailySwitchCallBack" class = "com.szrhtf.task.callBack.DailySwitchCallBackImpl"/>
+	
+	<dubbo:reference id="dailySwitchService"  interface="com.szrhtf.share.interfaces.DailySwitchService" timeout="6400000" retries="0">
+	  <!-- 
+	   <dubbo:method name="liquidation"  timeout="2400000">
+	   </dubbo:method>
+	   <dubbo:method name="statisticsCompanyAccountNew"   timeout="2400000">
+	   </dubbo:method>
+	   <dubbo:method name="statisticsAngle" timeout="2400000">
+	   </dubbo:method>
+	   <dubbo:method name="settlement"  timeout="2400000">
+	   </dubbo:method> -->
+	</dubbo:reference>
+	
+	<dubbo:reference id="delayTaskService" interface="com.szrhtf.web.share.interfaces.DelayTaskService"/>
+	<dubbo:reference id="productInfoService" interface="com.szrhtf.web.share.interfaces.ProductInfoService"/>
+	<dubbo:reference id="merchantInfoService" interface="com.szrhtf.web.share.interfaces.MerchantInfoService"/>
+	<dubbo:reference id="publicInfoService" interface="com.szrhtf.web.share.interfaces.PublicInfoService"/>
+	<dubbo:reference id="bankService" interface="com.szrhtf.share.interfaces.BankService"/>
+	<dubbo:reference id="agentService" interface="com.szrhtf.web.share.interfaces.AgentService"/>
+	<dubbo:reference id="memcachedService"  interface="com.szrhtf.share.memcache.MemcachedService"/>
+	<dubbo:reference id="proxyPayService" interface="com.szrhtf.share.interfaces.ProxyPayService" async="true" sent="true"/>
+	<dubbo:reference id="notifyService" interface="com.szrhtf.share.interfaces.NotifyService" check="false"/>
+	<dubbo:reference id="fileDownAccountService" interface="com.szrhtf.share.interfaces.FileDownAccountService"/>
+	<dubbo:reference id="transService" interface="com.szrhtf.share.interfaces.TransService"/>
+	<dubbo:reference id="transInfoService" interface="com.szrhtf.web.share.interfaces.TransInfoService"/>
+	<dubbo:reference id="orderCheckJob" interface="com.szrhtf.share.interfaces.OrderCheckJob"/>
+	<dubbo:reference id="channelBalCheckJob" interface="com.szrhtf.share.interfaces.ChannelBalCheckJob"/>
+	
+	<dubbo:service interface="com.szrhtf.web.share.interfaces.DailySwitchTaskService" ref="dailySwitchTaskService" retries="0"/>
+</beans>

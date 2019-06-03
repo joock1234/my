@@ -1,0 +1,34 @@
+<assembly xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/assembly-1.0.0.xsd">
+	<id>package</id>
+	<formats>
+		<format>zip</format>
+	</formats>
+	<includeBaseDirectory>true</includeBaseDirectory>
+	<fileSets>
+		<fileSet>
+			<directory>src/main/assembly</directory>
+			<outputDirectory>/bin</outputDirectory>
+			<includes>
+				<include>cmd.bat</include>
+				<include>run.bat</include>
+				<include>shutdown.bat</include>
+				<include>cmd.sh</include>
+				<include>run.sh</include>
+				<include>shutdown.sh</include>
+			</includes>
+		</fileSet>
+			
+		<fileSet>
+			<directory>src/main/assembly</directory>
+			<outputDirectory>/bin</outputDirectory>
+			
+		</fileSet>
+	</fileSets>
+	<dependencySets>
+		<dependencySet>
+			<useProjectArtifact>true</useProjectArtifact>
+			<outputDirectory>lib</outputDirectory>
+		</dependencySet>
+	</dependencySets>
+</assembly>
