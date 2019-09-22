@@ -1,0 +1,82 @@
+#新建个maven项目，在pom.xml加入插件.注意：<configurationFile>src/main/resources/mybatis-generator/generator.xml</configurationFile>配置文件位置
+
+<build>
+    <finalName>mybatis-auto</finalName>
+      <pluginManagement>  
+         <plugins>   
+           <plugin>
+            <groupId>org.mybatis.generator</groupId>
+            <artifactId>mybatis-generator-maven-plugin</artifactId>
+            <version>1.3.2</version>
+            <configuration>
+                <configurationFile>src/main/resources/mybatis-generator/generator.xml</configurationFile>
+                <verbose>true</verbose>
+                <overwrite>true</overwrite>
+             </configuration>
+             <executions>
+                <execution>
+                    <id>Generate MyBatis Artifacts</id>
+                    <goals>
+                        <goal>generate</goal>
+                    </goals>
+                </execution>
+             </executions>
+             <dependencies>
+                <dependency>
+                    <groupId>org.mybatis.generator</groupId>
+                    <artifactId>mybatis-generator-core</artifactId>
+                    <version>1.3.2</version>
+                </dependency>
+             </dependencies>
+            </plugin>
+        </plugins>  
+       </pluginManagement>   
+  </build>
+
+#在指定目录加入相应的配置文件generator.xml，并修改相应属性
+
+<?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+ <generatorConfiguration>
+     <!-- 数据库驱动包位置 -->
+     <classPathEntry location="E:\mavendown\com\oracle\ojdbc16\11.2.0.4.0\ojdbc16-11.2.0.4.0.jar" /> 
+     <!-- <classPathEntry location="C:\oracle\product\10.2.0\db_1\jdbc\lib\ojdbc14.jar" />-->
+     <context id="DB2Tables" targetRuntime="MyBatis3">
+         <commentGenerator>
+             <property name="suppressAllComments" value="true" />
+         </commentGenerator>
+         <!-- 数据库链接URL、用户名、密码 -->
+          <!-- <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/test" userId="root" password="1234"> --> 
+         <jdbcConnection driverClass="oracle.jdbc.driver.OracleDriver" connectionURL="jdbc:oracle:thin:@192.168.10.234:1521:snsdb" userId="hhlysns" password="xyzz">
+         </jdbcConnection>
+         <javaTypeResolver>
+             <property name="forceBigDecimals" value="false" />
+         </javaTypeResolver>
+         <!-- 生成实体类的包名和位置，这里配置将生成的实体类放在com.liyi.test.domain这个包下 -->
+         <javaModelGenerator targetPackage="com.liyi.test.domain" targetProject="D:\java-neon\eclipse\workspace1\mybatis-auto\src\main\java">
+                                                                                 
+             <property name="enableSubPackages" value="true" />
+             <property name="trimStrings" value="true" />
+         </javaModelGenerator>
+         <!-- 生成的SQL映射文件包名和位置，这里配置将生成的SQL映射文件放在com.liyi.test.mapping这个包下 -->
+         <sqlMapGenerator targetPackage="com.liyi.test.mapping" targetProject="D:\java-neon\eclipse\workspace1\mybatis-auto\src\main\java">
+             <property name="enableSubPackages" value="true" />
+         </sqlMapGenerator>
+         <!-- 生成DAO的包名和位置，这里配置将生成的dao类放在com.liyi.test.mapping这个包下 -->
+         <javaClientGenerator type="XMLMAPPER" targetPackage="com.liyi.test.dao" targetProject="D:\java-neon\eclipse\workspace1\mybatis-auto\src\main\java">
+             <property name="enableSubPackages" value="true" />
+         </javaClientGenerator>
+         <!-- 要生成那些表(更改tableName和domainObjectName就可以) -->
+         <table tableName="APP_LANG" domainObjectName="AppLang" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
+     </context>
+</generatorConfiguration>
+
+#两种运行maven方法
+1 在eclipse 中 运行maven build 后填入mybatis-generator:generate
+
+2.运行cmd，跳到项目根路径，运行mvn mybatis-generator:generate
+
+
+
+
+
